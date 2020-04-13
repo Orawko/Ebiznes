@@ -38,7 +38,12 @@ RUN mv node_modules/npm  /root/.nvm/versions/node/v${NODE_VERSION}/lib/node_modu
 RUN node --version
 RUN npm --version
 
-WORKDIR /home/orawiec/projekt
+RUN useradd -ms /bin/bash orawiec
+RUN adduser orawiec sudo
+USER orawiec
+RUN mkdir /home/orawiec/projekt
+VOLUME ["/home/orawiec/projekt"]
+WORKDIR /home/orawiec
 
 EXPOSE 8000
 EXPOSE 9000
