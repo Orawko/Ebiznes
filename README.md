@@ -6,7 +6,7 @@ Project of e-commerce shop for university classes
 
 https://hub.docker.com/r/orawko/ebiznes
 
-##Server 
+## Server 
 
 Written in Scala, based on Play Framework, using Slick middleware
 
