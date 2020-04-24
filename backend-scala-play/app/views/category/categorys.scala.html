@@ -1,0 +1,6 @@
+@(categorys: Seq[Category])
+
+@for(category <- categorys) {
+    <b>@category.name</b>
+    @category.idCategories
+}
