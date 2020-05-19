@@ -3,14 +3,13 @@
 <ul>
     @for(product <- products) {
         <li>
-            <b>@product.name</b>
+            <strong>@product.name</strong>
             @product.description
             @product.idCategories
             @product.price
             @product.idDelivery
             @product.idPhotos
             <a href="@controllers.routes.ProductController.updateProduct(product.idProducts)">Edit</a>
-
         </li>
     }
 </ul>
