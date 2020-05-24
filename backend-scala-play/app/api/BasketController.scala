@@ -37,15 +37,10 @@ class BasketController @Inject()(basketRepo: BasketRepository,
     }
   }
 
-  def get(id: Int): Action[AnyContent] = {
+  def getByUserId(id: Int): Action[AnyContent] = {
     Action.async { implicit request =>
-      val basket = for {
-        basket <- basketRepo.getByIdOption(id)
-      } yield basket
-
-      basket.map {
-        case Some(basket) => Ok(Json.toJson(basket))
-        case None => NotFound
+      basketRepo.getByUser(id).map {
+        basket => Ok(Json.toJson(basket))
       }
     }
   }

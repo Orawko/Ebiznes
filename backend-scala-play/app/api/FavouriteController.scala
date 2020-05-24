@@ -50,6 +50,14 @@ class FavouriteController @Inject()(favouriteRepo: FavouriteRepository,
     }
   }
 
+  def getByUserId(id: Int): Action[AnyContent] = {
+    Action.async { implicit request =>
+      favouriteRepo.getByUser(id).map {
+        favourite => Ok(Json.toJson(favourite))
+      }
+    }
+  }
+
   def add(): Action[AnyContent] = Action.async { implicit request =>
     addFavouriteForm.bindFromRequest.fold(
       errorForm => {

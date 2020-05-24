@@ -54,6 +54,14 @@ class PaymentController @Inject()(paymentRepo: PaymentRepository,
     }
   }
 
+  def getByUserId(id: Int): Action[AnyContent] = {
+    Action.async { implicit request =>
+      paymentRepo.getByUser(id).map {
+        payment => Ok(Json.toJson(payment))
+      }
+    }
+  }
+
   def add(): Action[AnyContent] = Action.async { implicit request =>
     addPaymentForm.bindFromRequest.fold(
       errorForm => {

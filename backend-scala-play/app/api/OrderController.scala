@@ -52,6 +52,14 @@ class OrderController @Inject()(orderRepo: OrderRepository,
     }
   }
 
+  def getByUserId(id: Int): Action[AnyContent] = {
+    Action.async { implicit request =>
+      orderRepo.getByUser(id).map {
+        order => Ok(Json.toJson(order))
+      }
+    }
+  }
+
   def add(): Action[AnyContent] = Action.async { implicit request =>
     addOrderForm.bindFromRequest.fold(
       errorForm => {
