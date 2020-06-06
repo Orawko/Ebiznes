@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import BasketProduct from "./BasketProduct";
-import mockedUser from "./mockedUser";
+import {getUser} from "../helpers/user"
 
 class Basket extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      user: mockedUser,
+      user: getUser(),
       basketData: null,
       products: [],
       deliveries: [],
@@ -17,8 +17,11 @@ class Basket extends Component {
   }
 
   componentDidMount() {
-    this.getUserBasket(this.state.user.idUsers);
+    this.getUserBasket(this.state.user.id);
     this.getDeliveries();
+
+    const date = this.getSQLDate();
+    console.log(date);
   }
 
   getUserBasket(idUser) {
@@ -112,7 +115,7 @@ class Basket extends Component {
 
   }
 
-  getSQLDate = () => {
+  getSQLDate() {
     const pad = function (num) {
       return ('00' + num).slice(-2)
     };
@@ -147,7 +150,8 @@ class Basket extends Component {
 
   addToPurchased = (idUsers, idProducts) => {
     const formData = new URLSearchParams();
-    formData.append('date', `${this.getSQLDate()}`);
+    const date = this.getSQLDate();
+    formData.append('date', `${date}`);
     formData.append('idUsers', `${idUsers}`);
     formData.append('idProducts', `${idProducts}`);
 
@@ -202,7 +206,7 @@ class Basket extends Component {
   }
 
   addPurchasedItems = products => {
-    products.forEach(p => this.addToPurchased(this.state.user.idUsers, p.idProducts));
+    products.forEach(p => this.addToPurchased(this.state.user.id, p.idProducts));
   }
 
   handlePurchase = () => {
@@ -211,7 +215,7 @@ class Basket extends Component {
     } else if (this.state.products.length < 1) {
       alert("No products in basket!");
     } else {
-      this.addPaynment(this.state.user.idUsers, this.state.cartSum);
+      this.addPaynment(this.state.user.id, this.state.cartSum);
       this.addPurchasedItems(this.state.products);
       this.removePurchasedBasket(this.state.basketData);
     }

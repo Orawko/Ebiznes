@@ -5,43 +5,44 @@ import Products from "./components/Products";
 import Basket from "./components/Basket";
 import SiteNotFound from "./components/SiteNotFound";
 import User from "./components/User";
+import Login from "./components/Login";
 import './styles/shop.css';
+import UserProvider from "./providers/UserProvider";
+import Redirect from "./components/Redirect";
+import {getUser} from "./helpers/user"
 
 class App extends Component {
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      user: getUser()
+    }
+  }
 
   render() {
     return (
-      <BrowserRouter>
-        <div className="App">
-          <Switch>
-            <Route exact path="/" component={Shop}/>
-            <Route path="/basket" component={Basket}/>
-            {/*<Route path="/order" component={Order}/>*/}
-            {/*<Route path="/orderDetails" component={OrderDetails}/>*/}
-            {/*<Route path="/userOrders" component={UserOrders}/>*/}
-
-            {/*<Route path="/adminPanel" component={AdminPanel}/>*/}
-            {/*<Route path="/addProduct" component={AddProduct}/>*/}
-            {/*<Route path="/addCategory" component={AddCategory}/>*/}
-            {/*<Route path="/editProducts" component={EditProducts}/>*/}
-            {/*<Route path="/editCategories" component={EditCategories}/>*/}
-            {/*<Route path="/editOrders" component={EditOrders}/>*/}
-
-            {/*<Route path="/DeleteProduct" component={DeleteProduct}/>*/}
-            {/*<Route path="/DeleteCategory" component={DeleteCategory}/>*/}
-            {/*<Route path="/DeleteOrder" component={DeleteOrder}/>*/}
-            <Route path="/user" component={User}/>
-
-            {/*<Route path="/product/:productId" component={Product}/>*/}
-            <Route path="/products" component={Products}/>
-            <Route path="*" component={SiteNotFound}/>
-            {/*<Route path="/login" component={LoginHome}/>*/}
-            {/*<Route path="/registration" component={Registration}/>*/}
-          </Switch>
-        </div>
-      </BrowserRouter>
-
+      <UserProvider>
+        <BrowserRouter>
+          <div className="App">
+            {this.state.user ?
+              <Switch>
+                <Route exact path="/" component={Shop}/>
+                <Route path="/basket" component={Basket}/>
+                <Route path="/user" component={User}/>
+                <Route path="/products" component={Products}/>
+                <Route path="/redirect/:provider" component={Redirect}/>
+                <Route path="/login" component={Login}/>
+                <Route path="*" component={SiteNotFound}/>
+              </Switch> :
+              <Switch>
+                <Route path="/redirect/:provider" component={Redirect}/>
+                <Route path="/*" component={Login}/>
+                <Route path="*" component={SiteNotFound}/>
+              </Switch>}
+          </div>
+        </BrowserRouter>
+      </UserProvider>
     );
   }
 }

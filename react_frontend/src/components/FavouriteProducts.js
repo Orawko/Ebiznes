@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import "../styles/product.css";
+import {refreshPage} from "../helpers/reload"
 
 class FavouriteProducts extends Component {
   deleteFromFavourites = (idFavourites) => {
@@ -22,7 +23,6 @@ class FavouriteProducts extends Component {
         }
       })
       .catch(() => alert("Removed from favourites!"));
-
   }
 
   render() {
@@ -35,7 +35,10 @@ class FavouriteProducts extends Component {
             <h1 className="title">{f.name}</h1>
             <p className="description">{f.description}</p>
             <button className="deleteFromCartButton"
-                    onClick={() => this.deleteFromFavourites(f.idFavourites)}
+                    onClick={() => {
+                      this.deleteFromFavourites(f.idFavourites)
+                      refreshPage();
+                    }}
             >Remove from favourite
             </button>
           </div>

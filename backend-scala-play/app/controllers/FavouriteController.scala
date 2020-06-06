@@ -15,7 +15,7 @@ class FavouriteController @Inject()(favouriteRepo: FavouriteRepository, userRepo
 
   val favouriteForm: Form[CreateFavouriteForm] = Form {
     mapping(
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "idProducts" -> number,
     )(CreateFavouriteForm.apply)(CreateFavouriteForm.unapply)
   }
@@ -23,7 +23,7 @@ class FavouriteController @Inject()(favouriteRepo: FavouriteRepository, userRepo
   val updateFavouriteForm: Form[UpdateFavouriteForm] = Form {
     mapping(
       "idFavourites" -> number,
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "idProducts" -> number,
     )(UpdateFavouriteForm.apply)(UpdateFavouriteForm.unapply)
   }
@@ -105,6 +105,6 @@ class FavouriteController @Inject()(favouriteRepo: FavouriteRepository, userRepo
   }
 }
 
-case class CreateFavouriteForm(idUsers: Int, idProducts: Int)
+case class CreateFavouriteForm(idUsers: String, idProducts: Int)
 
-case class UpdateFavouriteForm(idFavourites: Int, idUsers: Int, idProducts: Int)
+case class UpdateFavouriteForm(idFavourites: Int, idUsers: String, idProducts: Int)

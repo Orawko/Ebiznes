@@ -19,7 +19,7 @@ class PaymentController @Inject()(paymentRepo: PaymentRepository, userRepo: User
     mapping(
       "status" -> nonEmptyText,
       "date" -> sqlDate,
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "value" -> number,
     )(CreatePaymentForm.apply)(CreatePaymentForm.unapply)
   }
@@ -29,7 +29,7 @@ class PaymentController @Inject()(paymentRepo: PaymentRepository, userRepo: User
       "idPayments" -> number,
       "status" -> nonEmptyText,
       "date" -> sqlDate,
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "value" -> number,
     )(UpdatePaymentForm.apply)(UpdatePaymentForm.unapply)
   }
@@ -99,6 +99,6 @@ class PaymentController @Inject()(paymentRepo: PaymentRepository, userRepo: User
   }
 }
 
-case class CreatePaymentForm(status: String, date: Date, idUsers: Int, value: Int)
+case class CreatePaymentForm(status: String, date: Date, idUsers: String, value: Int)
 
-case class UpdatePaymentForm(idPayments: Int, status: String, date: Date, idUsers: Int, value: Int)
+case class UpdatePaymentForm(idPayments: Int, status: String, date: Date, idUsers: String, value: Int)

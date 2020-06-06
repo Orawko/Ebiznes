@@ -63,11 +63,11 @@ class Product extends Component {
         <p className="description">{productData.description}</p>
         <div>
           <button className="addToCartButton"
-                  onClick={() => this.addToCart(user.idUsers, productData.idProducts)}>
+                  onClick={() => this.addToCart(user.id, productData.idProducts)}>
             Add to cart
           </button>
           <button className="addToFavouriteButton"
-                  onClick={() => this.addToFavourites(user.idUsers, productData.idProducts)}>
+                  onClick={() => this.addToFavourites(user.id, productData.idProducts)}>
             Favourite
           </button>
         </div>

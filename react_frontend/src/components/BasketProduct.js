@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import "../styles/product.css";
+import {refreshPage} from "../helpers/reload"
 
 class BasketProduct extends Component {
 
@@ -36,7 +37,10 @@ class BasketProduct extends Component {
         </div>
         <p className="description">{productData.description}</p>
         <button className="deleteFromCartButton"
-                onClick={() => this.deleteFromCart(productData.idBaskets)}
+                onClick={() => {
+                  this.deleteFromCart(productData.idBaskets)
+                  refreshPage();
+                }}
         >Remove item
         </button>
       </div>

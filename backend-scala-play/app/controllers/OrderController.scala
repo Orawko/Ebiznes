@@ -18,7 +18,7 @@ class OrderController @Inject()(orderRepo: OrderRepository, userRepo: UserReposi
   val orderForm: Form[CreateOrderForm] = Form {
     mapping(
       "date" -> sqlDate,
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "idProducts" -> number,
     )(CreateOrderForm.apply)(CreateOrderForm.unapply)
   }
@@ -27,7 +27,7 @@ class OrderController @Inject()(orderRepo: OrderRepository, userRepo: UserReposi
     mapping(
       "idOrders" -> number,
       "date" -> sqlDate,
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "idProducts" -> number,
     )(UpdateOrderForm.apply)(UpdateOrderForm.unapply)
   }
@@ -104,6 +104,6 @@ class OrderController @Inject()(orderRepo: OrderRepository, userRepo: UserReposi
   }
 }
 
-case class CreateOrderForm(date: Date, idUsers: Int, idProducts: Int)
+case class CreateOrderForm(date: Date, idUsers: String, idProducts: Int)
 
-case class UpdateOrderForm(idOrders: Int, date: Date, idUsers: Int, idProducts: Int)
+case class UpdateOrderForm(idOrders: Int, date: Date, idUsers: String, idProducts: Int)
