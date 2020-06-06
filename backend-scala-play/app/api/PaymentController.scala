@@ -18,7 +18,7 @@ class PaymentController @Inject()(paymentRepo: PaymentRepository,
     mapping(
       "status" -> nonEmptyText,
       "date" -> sqlDate,
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "value" -> number,
     )(CreatePaymentForm.apply)(CreatePaymentForm.unapply)
   }
@@ -28,7 +28,7 @@ class PaymentController @Inject()(paymentRepo: PaymentRepository,
       "idPayments" -> number,
       "status" -> nonEmptyText,
       "date" -> sqlDate,
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "value" -> number,
     )(UpdatePaymentForm.apply)(UpdatePaymentForm.unapply)
   }
@@ -54,7 +54,7 @@ class PaymentController @Inject()(paymentRepo: PaymentRepository,
     }
   }
 
-  def getByUserId(id: Int): Action[AnyContent] = {
+  def getByUserId(id: String): Action[AnyContent] = {
     Action.async { implicit request =>
       paymentRepo.getByUser(id).map {
         payment => Ok(Json.toJson(payment))

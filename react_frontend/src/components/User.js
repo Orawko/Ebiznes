@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import "../styles/user.css";
-import mockedUser from "./mockedUser";
 import FavouriteProducts from "./FavouriteProducts";
 import OrderedProducts from "./OrderedProducts";
 import Payments from "./Payments";
+import {getUser} from "../helpers/user"
 
 class User extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      user: mockedUser,
+      user: getUser(),
       userSettings: null,
       orders: null,
       payments: null,
@@ -20,30 +20,10 @@ class User extends Component {
   }
 
   componentDidMount() {
-    this.getUserSettings(this.state.user.idSettings);
-    this.getUserPayments(this.state.user.idUsers);
-    this.getFavourites(this.state.user.idUsers);
-    this.getOrders(this.state.user.idUsers);
-  }
-
-  getUserSettings(idSettings) {
-    fetch(`http://localhost:9000/api/setting/${idSettings}`, {
-        mode: 'cors',
-        method: 'GET',
-        headers: {
-          'Access-Control-Allow-Origin': '*'
-        },
-      }
-    )
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({userSettings: result});
-        },
-        (error) => {
-          console.log(error)
-        }
-      )
+    this.getUserPayments(this.state.user.id);
+    this.getFavourites(this.state.user.id);
+    this.getOrders(this.state.user.id);
+    console.log(getUser());
   }
 
   getUserPayments(idUser) {
@@ -166,11 +146,10 @@ class User extends Component {
       <div>
         <a href="http://localhost:3000/" className="back">Back</a>
         <div className="user">
-          <h1>{this.state.user.email}</h1>
           <div>
-            <h1>About me</h1>
-            {this.state.userSettings ? this.state.userSettings.description : null}
+            <h1>{this.state.user.firstName} {this.state.user.lastName}</h1>
           </div>
+          <h1>{this.state.user.email}</h1>
         </div>
         {this.state.favouriteProducts ? <FavouriteProducts favourites={this.state.favouriteProducts}/> : null}
         {this.state.orderedProducts ?

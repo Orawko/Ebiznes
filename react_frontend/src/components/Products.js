@@ -1,20 +1,19 @@
 import React, {Component} from 'react';
 import Product from "./Product";
-import mockedUser from "./mockedUser";
+import {getUser} from "../helpers/user"
 
 class Products extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      user: mockedUser,
+      user: getUser(),
       products: null,
       categories: null,
       loadingProducts: true,
       category: null
     };
   }
-
 
   componentDidMount() {
     this.getProducts();

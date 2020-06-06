@@ -15,7 +15,7 @@ class OrderedProducts extends Component {
               <h3 className="price">{p.price}$</h3>
             </div>
             <p className="description">{p.description}</p>
-            <p className="description">{Date(ordered[index].date).toString()}</p>
+            <p className="description">{Date(ordered[index].date).toString().substring(4, 15)}</p>
           </div>
         })}
       </div>

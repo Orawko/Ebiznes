@@ -12,7 +12,7 @@ class Payments extends Component {
             <div className="productSpecs">
               <h1 className="price">{p.value}$</h1>
             </div>
-            <p className="description">{Date(p.date).toString()}</p>
+            <p className="description">{Date(p.date).toString().substring(4, 15)}</p>
           </div>
         })}
       </div>

@@ -30,6 +30,11 @@ nav {
     top: 2vh;
     right: 1vw;
     font-size: 30px;
+    cursor: pointer;
+}
+
+.back:hover {
+    color: #336b2f;
 }
 
 .description {

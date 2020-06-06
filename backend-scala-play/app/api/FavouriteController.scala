@@ -16,7 +16,7 @@ class FavouriteController @Inject()(favouriteRepo: FavouriteRepository,
 
   val addFavouriteForm: Form[CreateFavouriteForm] = Form {
     mapping(
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "idProducts" -> number,
     )(CreateFavouriteForm.apply)(CreateFavouriteForm.unapply)
   }
@@ -24,7 +24,7 @@ class FavouriteController @Inject()(favouriteRepo: FavouriteRepository,
   val updateFavouriteForm: Form[UpdateFavouriteForm] = Form {
     mapping(
       "idFavourites" -> number,
-      "idUsers" -> number,
+      "idUsers" -> nonEmptyText,
       "idProducts" -> number,
     )(UpdateFavouriteForm.apply)(UpdateFavouriteForm.unapply)
   }
@@ -50,7 +50,7 @@ class FavouriteController @Inject()(favouriteRepo: FavouriteRepository,
     }
   }
 
-  def getByUserId(id: Int): Action[AnyContent] = {
+  def getByUserId(id: String): Action[AnyContent] = {
     Action.async { implicit request =>
       favouriteRepo.getByUser(id).map {
         favourite => Ok(Json.toJson(favourite))
